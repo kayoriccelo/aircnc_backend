@@ -6,13 +6,15 @@ module.exports = {
     async store(req, res) {
         const { email } = req.body;
 
-        console.log(email)
-
-        const user = await User.create({
+        let user = await User.findOne({
             email
-        })
-        .then(res => console.log(res))
-        .catch(err => console.log(err));
+        });
+
+        if (!user) {
+            user = await User.create({
+                email
+            });
+        };
 
         return res.json(user);
     }
