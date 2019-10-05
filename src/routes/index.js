@@ -1,10 +1,9 @@
 const express = require('express');
 
-
 const routes = express.Router();
 
-routes.get('/', (req, res) => {
-    console.log('Hello Omnistack');
-});
+
+const SessionController = require('../controllers/Session');
+routes.post('/sessions', SessionController.store);
 
 module.exports = routes;
