@@ -1,4 +1,5 @@
 const Spot = require('../models/Spot');
+const User = require('../models/User');
 
 
 module.exports = {
@@ -16,8 +17,7 @@ module.exports = {
         const { filename } = req.file;
         const { company, techs, price } = req.body;
         const { user_id } = req.headers;
-
-        const user = await user.findById(user_id);
+        const user = await User.findById(user_id);
 
         if (!user) {
             return res.status(400).json(({ error: 'User does not exists' }));
@@ -28,7 +28,7 @@ module.exports = {
             thumbnail: filename,
             company,
             techs: techs.split(',').map(tech => tech.trim()),
-            price
+            price: price === 'null' ? null : price
         });
 
         return res.json(spot);
